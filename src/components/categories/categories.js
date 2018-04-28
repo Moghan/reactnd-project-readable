@@ -1,39 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
+import Category from './category';
+import * as BlogAPI from '../../BlogAPI';
 
 const Page = styled.div`
   display: flex;
   height: 100%;
   width: 80%;
-  margin: 0 auto;
+  margin: 10px auto;
   background: lightgrey;
 `
 
-const CatContainer = styled.div`
-  display: flex;
-  flex: 1;
-`
-
-const CatTitle = styled.div`
-  margin: auto auto;
-  padding: 20px 0;
-  font-size: 24px;
-`
-
-
 export class Categories extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cats: []
+    };
+  }
+  componentWillMount() {
+    BlogAPI.getCategories().then((cats) => {
+      this.setState({
+        cats: cats
+      });
+    });
+  }
+
   render () {
+    console.log(this.state);
     return (
       <Page>
-        <CatContainer>
-          <CatTitle>cat one</CatTitle>
-        </CatContainer>
-        <CatContainer>
-          <CatTitle>cat two</CatTitle>
-        </CatContainer>
-        <CatContainer>
-          <CatTitle>cat three</CatTitle>
-        </CatContainer>
+        { this.state.cats.map((cat, index) => <Category key={index} category={cat} /> )}        
       </Page>
     )
   }
