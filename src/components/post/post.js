@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { upVote, downVote } from '../../app/actions';
+import { connect } from 'react-redux';
 
 const PostContainer = styled.div`
   display: flex;
@@ -79,14 +81,29 @@ const Comments = styled.h5`
 
 
 export class Post extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleUpVote = this.handleUpVote.bind(this);
+    this.handleDownVote = this.handleDownVote.bind(this);
+  }
+
+  handleUpVote() {
+    this.props.upVote(this.props.post.id);
+  }
+
+  handleDownVote() {
+    this.props.downVote(this.props.post.id);
+  }
+
   render () {
     const { title = 'anonomous', timestamp = 'timeless', commentCount = 0, voteScore = 0 } = this.props.post
     return (
       <PostContainer>
         <ScoreContainer>
-          <BtnIncrease>+</ BtnIncrease>
+          <BtnIncrease name='upvote' onClick={this.handleUpVote}>+</ BtnIncrease>
           <ScoreValue>{voteScore}</ ScoreValue>
-          <BtnDecrease>-</ BtnDecrease>
+          <BtnDecrease onClick={this.handleDownVote}>-</ BtnDecrease>
         </ ScoreContainer>
         <Image />
         <InfoContainer>
@@ -99,4 +116,16 @@ export class Post extends React.Component {
   }
 }
 
-export default Post;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    upVote: (id) => dispatch(upVote(id)),
+    downVote: (id) => dispatch(downVote(id))
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

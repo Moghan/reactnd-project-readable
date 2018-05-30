@@ -23,11 +23,16 @@ export const getCategories = () =>
 
 export const getCategoryPosts = (category)  =>
   fetch(`${api}/${category}/posts`, {headers})
-  .then(res => res.json())
+    .then(res => res.json())
 
 export const getPosts = (category)  =>
-fetch(`${api}/posts`, {headers})
-.then(res => res.json())
+  fetch(`${api}/posts`, {headers})
+    .then(res => res.json())
 
 export const addPost = (post) =>
   fetch(`${api}/posts`, {headers, method: "POST", body: JSON.stringify(post)})
+    .then(res => res.json())
+
+export const handleVote = (id, option) => {
+  fetch(`${api}/posts/${id}`, {headers, method: "POST", body: JSON.stringify(option)})
+}

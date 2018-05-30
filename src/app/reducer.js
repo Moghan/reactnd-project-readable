@@ -3,6 +3,7 @@ import {
   SET_CATEGORIES,
   SET_POSTS,
   ADD_POST,
+  HANDLE_VOTE,
 } from './actions'
 
 import * as BlogAPI from '../BlogAPI';
@@ -48,6 +49,19 @@ const posts = (state = {}, action) => {
       BlogAPI.addPost(post);
       return {
         posts: [...state.posts, post]
+      }
+    case HANDLE_VOTE:
+      const { id, option } = action;
+      BlogAPI.handleVote(id, option);
+      const changeValue = option.option === "upVote" ? 1 : -1;
+      let modifyPost = state.posts.filter(post => post.id === id);
+      modifyPost =  {
+        ...modifyPost[0],
+        voteScore: modifyPost[0].voteScore + changeValue
+      }
+      const restOfPosts = state.posts.filter(post => post.id !== id);
+      return {
+        posts: [...restOfPosts, modifyPost]
       }
     default: return state;
   }

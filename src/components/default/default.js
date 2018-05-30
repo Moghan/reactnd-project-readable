@@ -1,6 +1,6 @@
-import * as BlogAPI from '../../BlogAPI'
 import React from 'react';
 import Post from '../post';
+import { connect } from 'react-redux';
 
 export class Default extends React.Component {
   constructor(props) {
@@ -11,23 +11,12 @@ export class Default extends React.Component {
     };    
   }
   
-  componentWillMount() {
-    BlogAPI.getAll().then((posts) => {
-      this.setState({
-        posts: posts
-      });
-    });
-  }
-
-  componentDidMount()  {
-    BlogAPI.getCategories().then((cats) => {
-    });
-  }
-
   render () {
+    const { posts = []} = this.props;
+    console.log(posts);
     return (
       <div>
-        {this.state.posts.map((post, index) =>
+        { posts.map((post, index) =>
           <Post key={index} post={post}/>
         )}        
       </div>
@@ -35,4 +24,10 @@ export class Default extends React.Component {
   }
 }
 
-export default Default;
+const mapStateToProps = ({ posts }) => {
+  return {
+    posts: posts.posts
+  }
+}
+
+export default connect(mapStateToProps)(Default);
