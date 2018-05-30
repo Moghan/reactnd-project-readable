@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
 }
 
 .App-logo {
@@ -16,6 +15,7 @@
 
 .App-title {
   font-size: 1em;
+  width: 400px;
 }
 
 .App-intro {

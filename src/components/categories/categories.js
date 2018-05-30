@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Category from './category';
 import * as BlogAPI from '../../BlogAPI';
+import { connect } from 'react-redux';
 
 const Page = styled.div`
   display: flex;
@@ -9,31 +10,31 @@ const Page = styled.div`
   width: 80%;
   margin: 10px auto;
   background: lightgrey;
+  border: 2px solid red;
 `
 
-export class Categories extends React.Component {
+class Categories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cats: []
     };
   }
-  componentWillMount() {
-    BlogAPI.getCategories().then((cats) => {
-      this.setState({
-        cats: cats
-      });
-    });
-  }
 
   render () {
-    console.log(this.state);
+    console.log(this.props);
     return (
       <Page>
-        { this.state.cats.map((cat, index) => <Category key={index} category={cat} /> )}        
+          { this.props.categories && this.props.categories.map((cat, index) => <Category key={index} category={cat} /> )}      
       </Page>
     )
   }
 }
 
-export default Categories;
+const mapStateToProps = ({categories}) => {
+  return {
+    categories: categories.categories
+  };
+};
+
+export default connect(mapStateToProps)(Categories);
