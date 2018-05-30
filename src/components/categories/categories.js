@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Category from './category';
-import * as BlogAPI from '../../BlogAPI';
 import { connect } from 'react-redux';
 
 const Page = styled.div`

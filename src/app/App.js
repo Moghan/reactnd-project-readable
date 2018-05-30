@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import '../App.css';
 import Header from '../components/header';
 import Categories from '../components/categories';
-import Post from '../components/post';
+import Post from '../components/PostItem';
 import Default from '../components/default';
 import CreateEdit from '../components/createEdit';
 import styled from 'styled-components';
@@ -19,27 +19,11 @@ const Body = styled.div`
 class App extends Component {
   componentDidMount() {
     BlogAPI.getPosts().then((posts) => {
-      console.log(posts);
       this.props.store.dispatch(setPosts(posts));
     });
     BlogAPI.getCategories().then((categories) => {
       this.props.store.dispatch(setCategories(categories));
     });
-    //console.log('cats ', this.props.store.categories);
-    /*
-      for (const category of categories) {
-        console.log(category);
-        BlogAPI.getCategoryPosts(category.path).then((posts) => {
-          console.log('posts : ', posts);
-          this.props.store.dispatch(setPosts({posts, category}))
-        });
-      }
-
-    for (const category of this.props.store.categories) {
-      BlogAPI.getCategoryPosts(category).then((posts) => {
-        this.props.store.dispatch(setPosts({posts, category}))
-      });
-    };*/
   }
   render() {
     return (

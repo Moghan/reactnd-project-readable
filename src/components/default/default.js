@@ -1,24 +1,13 @@
 import React from 'react';
-import Post from '../post';
 import { connect } from 'react-redux';
+import PostList from '../PostList';
 
-export class Default extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      posts: []
-    };    
-  }
-  
+export class Default extends React.Component {  
   render () {
-    const { posts = []} = this.props;
-    console.log(posts);
     return (
       <div>
-        { posts.map((post, index) =>
-          <Post key={index} post={post}/>
-        )}        
+        <PostList />        
       </div>
     )
   }
@@ -26,7 +15,6 @@ export class Default extends React.Component {
 
 const mapStateToProps = ({ posts }) => {
   return {
-    posts: posts.posts
   }
 }
 

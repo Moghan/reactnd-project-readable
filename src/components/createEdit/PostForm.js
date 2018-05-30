@@ -58,7 +58,6 @@ class PostForm extends React.Component {
         id,
         author,
         title,
-        category,
         body,
         timestamp,
         voteScore: 1,
@@ -68,7 +67,6 @@ class PostForm extends React.Component {
     }
   }
   render () {
-    console.log("state , ", this.state);
     return (
       <div>
         <CreateContactForm onSubmit={this.handleSubmit}>

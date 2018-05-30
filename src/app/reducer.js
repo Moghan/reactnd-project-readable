@@ -4,6 +4,8 @@ import {
   SET_POSTS,
   ADD_POST,
   HANDLE_VOTE,
+  SET_SORT_BY,
+  SET_FILTER_BY,
 } from './actions'
 
 import * as BlogAPI from '../BlogAPI';
@@ -36,18 +38,19 @@ const categories = (state = {}, action) => {
   }
 }
 
-const posts = (state = {}, action) => {
+const posts = (state = { sortBy: "timestamp", filterBy: ""}, action) => {
   switch(action.type) {
     case SET_POSTS:
       const { posts } = action;
       return {
+        ...state,
         posts,
       }
     case ADD_POST:
       const { post } = action;
-      console.log("TODO: add_post , ", post);
       BlogAPI.addPost(post);
       return {
+        ...state,
         posts: [...state.posts, post]
       }
     case HANDLE_VOTE:
@@ -61,7 +64,20 @@ const posts = (state = {}, action) => {
       }
       const restOfPosts = state.posts.filter(post => post.id !== id);
       return {
+        ...state,
         posts: [...restOfPosts, modifyPost]
+      }
+    case SET_SORT_BY:
+      const { sortBy } = action;
+      return {
+        ...state,
+        sortBy
+      }
+    case SET_FILTER_BY:
+      const { filterBy } = action;
+      return {
+        ...state,
+        filterBy
       }
     default: return state;
   }

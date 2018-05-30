@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import styled from 'styled-components';
-import * as BlogAPI from '../../BlogAPI';
-import _Post from '../post';
 
 const CatContainer = styled.div`
   display: flex;

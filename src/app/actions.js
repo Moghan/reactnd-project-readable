@@ -3,6 +3,9 @@ export const SET_CATEGORIES = 'SET_CATEGORIES';
 export const SET_POSTS = 'SET_POSTS';
 export const ADD_POST = 'ADD_POST';
 export const HANDLE_VOTE = 'HANDLE_VOTE';
+export const GET_ALL_POSTS = 'GET_ALL_POSTS';
+export const SET_SORT_BY = 'SET_SORT_BY';
+export const SET_FILTER_BY = 'SET_FILTER_BY';
 
 export const addComment = (comment) => ({
   type: ADD_COMMENT,
@@ -34,4 +37,14 @@ export const downVote = (id) => ({
   type: HANDLE_VOTE,
   id,
   option: { option: "downVote"}
+})
+
+export const setSortBy = (sortBy) => ({
+  type: SET_SORT_BY,
+  sortBy
+})
+
+export const setFilterBy = (filterBy) => ({
+  type: SET_FILTER_BY,
+  filterBy
 })
