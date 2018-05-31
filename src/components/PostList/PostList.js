@@ -15,7 +15,7 @@ export class PostList extends React.Component {
               else if(sortBy === 'voteScore') {
                 return a.voteScore < b.voteScore ? 1: -1;
               }
-              else return 1; // TODO: throw exception
+              else return 0; // TODO: throw exception
             })
             .filter((post) => {
               switch(filterBy) {
@@ -26,7 +26,7 @@ export class PostList extends React.Component {
               }
             })
             .map((post, index) =>
-              <PostItem key={index} post={post}/>
+              <PostItem key={index} post={post} />
         )}        
       </div>
     )
