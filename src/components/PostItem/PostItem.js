@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { upVote, downVote } from '../../app/actions';
 import { connect } from 'react-redux';
+import * as BlogAPI from '../../BlogAPI';
 
 
 const MainContainer = styled.div`
@@ -99,8 +100,13 @@ export class Post extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      showAll: this.props.showAll
+    }
+
     this.handleUpVote = this.handleUpVote.bind(this);
     this.handleDownVote = this.handleDownVote.bind(this);
+    this.handleOnClickPost = this.handleOnClickPost.bind(this);
   }
 
   handleUpVote() {
@@ -111,7 +117,23 @@ export class Post extends React.Component {
     this.props.downVote(this.props.post.id);
   }
 
+  handleOnClickPost() {
+    this.setState((prevState) => ({
+      ...prevState,
+      showAll: !prevState.showAll
+    }));
+
+    BlogAPI.getPostComments(this.props.post.id).then((commits) => {
+      this.setState( {
+        commits
+      });
+    });
+
+      
+  }
+
   render () {
+    console.log(this.state);
     const {
       title = 'anonomous',
       timestamp = 'timeless',
@@ -119,7 +141,7 @@ export class Post extends React.Component {
       voteScore = 0,
       body,
     } = this.props.post;
-    const { showAll } = this.props;
+    const { showAll } = this.state;
 
     return (
       <MainContainer>
@@ -131,7 +153,7 @@ export class Post extends React.Component {
           </ ScoreContainer>
           <Image />
           <InfoContainer>
-            <Title>{title}</Title>
+            <Title onClick={this.handleOnClickPost}>{title}</Title>
             <Timestamp>{timestamp}</Timestamp>
             <Comments>Comments: {commentCount}</ Comments>
           </ InfoContainer>
