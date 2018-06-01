@@ -1,9 +1,15 @@
 import React from 'react';
+import { CommentItem } from '../CommentItem/CommentItem';
 
-export class CommentList extends React.Component {
+export default class CommentList extends React.Component {
   render() {
+    const { comments } = this.props;
     return (
-      <div>CommentList</div>
+      <div>
+        { comments.map((comment, index) => (
+          <CommentItem key={index} comment={comment}/>
+        ))}
+      </div>
     )
   }
 }

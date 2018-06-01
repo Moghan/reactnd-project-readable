@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { upVote, downVote } from '../../app/actions';
 import { connect } from 'react-redux';
 import * as BlogAPI from '../../BlogAPI';
+import CommentList from '../CommentList';
 
 
 const MainContainer = styled.div`
@@ -19,8 +20,6 @@ const PostContainer = styled.div`
 `
 const BodyContainer = styled.div`
   flex: display;
-  margin: 5px 50px;
-  min-height: 100px;
 `
 
 const ScoreContainer = styled.div`
@@ -42,13 +41,23 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
 `
-const Comments = styled.h5`
+const CommentCount = styled.h5`
   margin: 2px 20px;
   &:hover {
     text-decoration: underline;
     cursor: pointer;
   }
 `
+
+const CommentsContainer = styled.div`
+  margin: 5px 50px;
+`
+
+const PostText = styled.div`
+  margin: 5px 50px;
+  min-height: 70px;
+`
+
 const ScoreValue = styled.div`
   margin: 0 auto;
 `
@@ -101,7 +110,8 @@ export class Post extends React.Component {
     super(props);
 
     this.state = {
-      showAll: this.props.showAll
+      showAll: this.props.showAll,
+      comments: []
     }
 
     this.handleUpVote = this.handleUpVote.bind(this);
@@ -123,9 +133,9 @@ export class Post extends React.Component {
       showAll: !prevState.showAll
     }));
 
-    BlogAPI.getPostComments(this.props.post.id).then((commits) => {
+    BlogAPI.getPostComments(this.props.post.id).then((comments) => {
       this.setState( {
-        commits
+        comments
       });
     });
 
@@ -133,7 +143,6 @@ export class Post extends React.Component {
   }
 
   render () {
-    console.log(this.state);
     const {
       title = 'anonomous',
       timestamp = 'timeless',
@@ -141,26 +150,33 @@ export class Post extends React.Component {
       voteScore = 0,
       body,
     } = this.props.post;
-    const { showAll } = this.state;
+    const { showAll, comments } = this.state;
 
     return (
       <MainContainer>
         <PostContainer>
           <ScoreContainer>
-            <BtnIncrease name='upvote' onClick={this.handleUpVote}>+</ BtnIncrease>
+            <BtnIncrease name='upvote' onClick={this.handleUpVote}>+</BtnIncrease>
             <ScoreValue>{voteScore}</ ScoreValue>
-            <BtnDecrease onClick={this.handleDownVote}>-</ BtnDecrease>
+            <BtnDecrease onClick={this.handleDownVote}>-</BtnDecrease>
           </ ScoreContainer>
           <Image />
           <InfoContainer>
             <Title onClick={this.handleOnClickPost}>{title}</Title>
             <Timestamp>{timestamp}</Timestamp>
-            <Comments>Comments: {commentCount}</ Comments>
+            <CommentCount>Comments: {commentCount}</CommentCount>
           </ InfoContainer>
         </PostContainer>
         { showAll && 
           <BodyContainer>
-            { body }
+            <PostText>
+              { body }
+            </PostText>
+            { comments.length > 0 &&
+              <CommentsContainer>
+                  <CommentList comments={comments}/>
+              </CommentsContainer>
+            }
           </BodyContainer>
         }
       </MainContainer>
