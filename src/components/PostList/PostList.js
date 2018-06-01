@@ -39,7 +39,6 @@ const mapStateToProps = ({ posts }) => {
   return {
     posts: posts.posts,
     sortBy: posts.sortBy,
-    filterBy: posts.filterBy
   }
 }
 

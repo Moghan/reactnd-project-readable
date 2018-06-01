@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setSortBy, setFilterBy } from '../../app/actions';
+import { setSortBy } from '../../app/actions';
 
 const SysbarContainer = styled.div`
   display: flex;
@@ -39,11 +39,6 @@ const CreatePostButton = styled.button`
   height: 100%;
 `
 
-const Categories = styled.button`
-  margin: 0 5px;
-  height: 100%;
-`
-
 const SortByPicker = styled.div`
 `
 
@@ -52,23 +47,13 @@ export class Header extends React.Component {
     super(props);
     
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleSetFilter = this.handleSetFilter.bind(this);
   }
 
   handleOnChange(event) {
     this.props.setSortBy(event.target.value);
   }
 
-  handleSetFilter(event) {
-    //console.log(event.target.value);
-    this.props.setFilterBy(event.target.value);
-  }
-
-  
-
-
   render() {
-    //console.log(this.props.categories);
     const { categories = [] } = this.props;
     return (
       <header className="App-header">
@@ -78,7 +63,6 @@ export class Header extends React.Component {
               <Title className="App-title">Welcome to Project Readable</Title>
             </Link>
             <Link to="/create-edit-view">
-              <Categories>Categories</ Categories>
               <CreatePostButton>Create New Post</CreatePostButton>
             </Link>
           </MainContainer>
@@ -91,12 +75,16 @@ export class Header extends React.Component {
               </select>       
             </SortByPicker>
             <CategoriesContainer>
-              <CategoryButton onClick={this.handleSetFilter} value="All">
+              <CategoryButton onClick={this.handleSetFilter}>
+                <Link to={`/all`}>
                   All
+                </Link>
               </CategoryButton>
               { categories.map((category, index) => (
-                <CategoryButton key={index} onClick={this.handleSetFilter} value={category.name}>
-                  { category.name }
+                <CategoryButton key={index}>
+                  <Link to={`/${category.path}`}>
+                    { category.name }
+                  </Link>
                 </CategoryButton>
               ))}
             </CategoriesContainer>
@@ -116,7 +104,6 @@ const mapStateToProps = ({ posts, categories }) => {
 const mapDispatchToProps = ( dispatch ) => {
   return {
     setSortBy: (sortBy) => dispatch(setSortBy(sortBy)),
-    setFilterBy: (filterBy) => dispatch(setFilterBy(filterBy))
   }
 }
 

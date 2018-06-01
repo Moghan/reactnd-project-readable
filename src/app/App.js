@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import '../App.css';
 import Header from '../components/header';
-import Categories from '../components/categories';
+import Category from '../components/Category';
 import Post from '../components/PostItem';
 import Default from '../components/default';
 import CreateEdit from '../components/createEdit';
@@ -31,10 +31,12 @@ class App extends Component {
         <div className='App'>
           <Header />
           <Body>
-            <Route path="/" exact component={Default} />
-            <Route path="/categories" exact component={Categories} />
-            <Route path="/post" exact component={Post} />
-            <Route path="/create-edit-view" exact component={CreateEdit} />
+            <Switch>
+              <Route path="/" exact component={Default} />
+              <Route path="/post" exact component={Post} />
+              <Route path="/create-edit-view" exact component={CreateEdit} />
+              <Route path="/:category" exact component={Category} />
+            </Switch>
           </Body>
         </div>
       </Provider>

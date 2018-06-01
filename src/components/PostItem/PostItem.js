@@ -186,12 +186,13 @@ export class Post extends React.Component {
       commentCount = 0,
       voteScore = 0,
       body,
+      id
     } = this.props.post;
     const {
       showAll,
-      comments,
       makingComment
     } = this.state;
+    const comments = this.state.comments.filter((comment) => comment.parentId === id);
 
     return (
       <MainContainer>
