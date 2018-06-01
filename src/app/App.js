@@ -5,6 +5,7 @@ import '../App.css';
 import Header from '../components/header';
 import Category from '../components/Category';
 import Post from '../components/PostItem';
+import PostDetails from '../components/PostItem/PostDetails';
 import Default from '../components/default';
 import CreateEdit from '../components/createEdit';
 import styled from 'styled-components';
@@ -32,10 +33,11 @@ class App extends Component {
           <Header />
           <Body>
             <Switch>
-              <Route path="/" exact component={Default} />
-              <Route path="/post" exact component={Post} />
-              <Route path="/create-edit-view" exact component={CreateEdit} />
-              <Route path="/:category" exact component={Category} />
+              <Route exact path="/" component={Default} />
+              <Route exact path="/post" component={Post} />
+              <Route exact path="/create-edit-view" component={CreateEdit} />
+              <Route exact path="/:category" component={Category} />
+              <Route exact path="/:category/:post_id" component={PostDetails} />
             </Switch>
           </Body>
         </div>

@@ -6,7 +6,8 @@ import {
   HANDLE_VOTE,
   SET_SORT_BY,
   SET_FILTER_BY,
-  INCREASE_COMMENT_COUNT
+  INCREASE_COMMENT_COUNT,
+  DELETE_POST
 } from './actions'
 
 import * as BlogAPI from '../BlogAPI';
@@ -91,6 +92,13 @@ const posts = (state = { sortBy: "timestamp", filterBy: "", pokeReload: false },
       return {
         ...state,
         posts: [ ...restOfPosts, modifyPost]
+      }
+    }
+    case DELETE_POST:{
+      const { id } = action;
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post.id !== id)
       }
     }
     default: return state;

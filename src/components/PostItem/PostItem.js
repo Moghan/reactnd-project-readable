@@ -6,6 +6,7 @@ import * as BlogAPI from '../../BlogAPI';
 import CommentList from '../CommentList';
 import CreateComment  from '../CommentItem/CreateCommentItem';
 import { increaseCommentCount } from '../../app/actions';
+import { Link, withRouter } from 'react-router-dom';
 
 const MainContainer = styled.div`
   display: flex;
@@ -62,8 +63,6 @@ const ScoreValue = styled.div`
   margin: 0 auto;
 `
 
-
-
 const BtnIncrease = styled.button`
   width: 25px;
   height: 25px;
@@ -82,6 +81,15 @@ const BtnDecrease = styled.button`
     text-decoration: underline;
     cursor: pointer;
   }
+`
+
+const BtnEdit = styled.button`
+  align-self: flex-start;
+  margin-left: auto;
+`
+
+const BtnDelete = styled.button`
+  align-self: flex-start;
 `
 
 const BtnMakeComment = styled.button`
@@ -113,17 +121,20 @@ export class Post extends React.Component {
     super(props);
 
     this.state = {
-      showAll: this.props.showAll,
+      showComments: this.props.showComments,
       comments: [],
       makingComment: false
     }
 
     this.handleUpVote = this.handleUpVote.bind(this);
     this.handleDownVote = this.handleDownVote.bind(this);
-    this.handleOnClickPost = this.handleOnClickPost.bind(this);
+    this.handleOnClickTitle = this.handleOnClickTitle.bind(this);
     this.handleMakeComment = this.handleMakeComment.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleOnClickEdit = this.handleOnClickEdit.bind(this);
+    this.handleOnClickDelete = this.handleOnClickDelete.bind(this);
+    this.handleOnClickComments = this.handleOnClickComments.bind(this);
   }
 
   loadComments() {
@@ -157,6 +168,14 @@ export class Post extends React.Component {
     });
   }
 
+  handleOnClickEdit() {
+    this.props.handleEdit(this.props.post.id);
+  }
+
+  handleOnClickDelete() {
+    this.props.handleDelete(this.props.post.id);
+  }
+
   handleMakeComment() {
     this.setState((prevState) => ({
       ...prevState,
@@ -172,11 +191,13 @@ export class Post extends React.Component {
     this.props.downVote(this.props.post.id);
   }
 
-  handleOnClickPost() {
+  handleOnClickTitle() {   
+  }
+
+  handleOnClickComments() {
     this.setState((prevState) => ({
-      ...prevState,
-      showAll: !prevState.showAll
-    }));     
+      showComments: !prevState.showComments
+    }));  
   }
 
   render () {
@@ -186,13 +207,18 @@ export class Post extends React.Component {
       commentCount = 0,
       voteScore = 0,
       body,
-      id
+      id,
+      category
     } = this.props.post;
     const {
-      showAll,
+      showComments,
       makingComment
     } = this.state;
     const comments = this.state.comments.filter((comment) => comment.parentId === id);
+
+    const LinkedTitle = withRouter(({history}) => (
+      <Title onClick={() => {history.push(`/${category}/${id}`)}}>{title}</Title>
+    ));
 
     return (
       <MainContainer>
@@ -204,12 +230,14 @@ export class Post extends React.Component {
           </ ScoreContainer>
           <Image />
           <InfoContainer>
-            <Title onClick={this.handleOnClickPost}>{title}</Title>
+            <LinkedTitle />
             <Timestamp>{timestamp}</Timestamp>
-            <CommentCount>Comments: {commentCount}</CommentCount>
+            <CommentCount onClick={this.handleOnClickComments}>Comments: {commentCount}</CommentCount>
           </ InfoContainer>
+          <BtnEdit onClick={this.handleOnClickEdit}>Edit</BtnEdit>
+          <BtnDelete onClick={this.handleOnClickDelete}>Delete</BtnDelete>
         </PostContainer>
-        { showAll && 
+        { showComments && 
           <BodyContainer>
             <PostText>
               { body }

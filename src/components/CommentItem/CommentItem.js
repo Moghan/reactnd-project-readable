@@ -27,7 +27,7 @@ export class CommentItem extends React.Component {
       timestamp,
       author
     } = this.props.comment;
-    console.log(this.props.comment);
+    //console.log(this.props.comment);
     return (
       <CommentContainer>
         <Header>

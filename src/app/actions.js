@@ -7,6 +7,7 @@ export const GET_ALL_POSTS = 'GET_ALL_POSTS';
 export const SET_SORT_BY = 'SET_SORT_BY';
 export const SET_FILTER_BY = 'SET_FILTER_BY';
 export const INCREASE_COMMENT_COUNT = 'INCREASE_COMMENT_COUNT';
+export const DELETE_POST = 'DELETE_POST';
 
 export const addComment = (comment) => ({
   type: ADD_COMMENT,
@@ -53,4 +54,9 @@ export const setFilterBy = (filterBy) => ({
 export const increaseCommentCount = (postId) => ({
   type: INCREASE_COMMENT_COUNT,
   postId
+})
+
+export const deletePost = id => ({
+  type: DELETE_POST,
+  id
 })

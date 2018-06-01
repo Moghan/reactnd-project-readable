@@ -42,6 +42,17 @@ export const addComment = (comment) => {
 }
 
 export const getPostComments = (id) =>
-  fetch(`${api}/posts/${id}/comments`, {headers: { 'Authorization': token }})
+  fetch(`${api}/posts/${id}/comments`, {headers})
     .then(res => res.json())
 
+export const deletePost = (id) => {
+  fetch(`${api}/posts/${id}`, {headers, method: "DELETE"})
+}
+
+export const _getPost = (id) =>
+  fetch(`${api}/posts/${id}`, {headers})
+
+export const getPost = (id) => 
+  fetch(
+    `http://localhost:3001/posts/${id}`,{ headers: { 'Authorization': token }}
+)
