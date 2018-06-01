@@ -4,7 +4,8 @@ import { upVote, downVote } from '../../app/actions';
 import { connect } from 'react-redux';
 import * as BlogAPI from '../../BlogAPI';
 import CommentList from '../CommentList';
-
+import CreateComment  from '../CommentItem/CreateCommentItem';
+import { increaseCommentCount } from '../../app/actions';
 
 const MainContainer = styled.div`
   display: flex;
@@ -15,7 +16,6 @@ const MainContainer = styled.div`
 
 const PostContainer = styled.div`
   display: flex;
-  margin: 0 50px;
   border: 2px solid red;
 `
 const BodyContainer = styled.div`
@@ -84,7 +84,10 @@ const BtnDecrease = styled.button`
   }
 `
 
-
+const BtnMakeComment = styled.button`
+  margin: 5px 50px;
+  width: 160px;
+`
 
 const Title = styled.h5`
   margin: 0 20px;
@@ -111,12 +114,54 @@ export class Post extends React.Component {
 
     this.state = {
       showAll: this.props.showAll,
-      comments: []
+      comments: [],
+      makingComment: false
     }
 
     this.handleUpVote = this.handleUpVote.bind(this);
     this.handleDownVote = this.handleDownVote.bind(this);
     this.handleOnClickPost = this.handleOnClickPost.bind(this);
+    this.handleMakeComment = this.handleMakeComment.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  loadComments() {
+    BlogAPI.getPostComments(this.props.post.id).then((comments) => {
+      this.setState( {
+        comments
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.loadComments();
+  }
+
+  handleSubmit(comment) {
+    comment = {
+      ...comment,
+      parentId: this.props.post.id
+    }
+    this.props.increaseCommentCount(this.props.post.id);
+    BlogAPI.addComment(comment);
+    this.loadComments();
+    this.setState({
+      makingComment: false
+    })
+  }
+
+  handleCancel() {
+    this.setState({
+      makingComment: false
+    });
+  }
+
+  handleMakeComment() {
+    this.setState((prevState) => ({
+      ...prevState,
+      makingComment: true
+    }));
   }
 
   handleUpVote() {
@@ -131,15 +176,7 @@ export class Post extends React.Component {
     this.setState((prevState) => ({
       ...prevState,
       showAll: !prevState.showAll
-    }));
-
-    BlogAPI.getPostComments(this.props.post.id).then((comments) => {
-      this.setState( {
-        comments
-      });
-    });
-
-      
+    }));     
   }
 
   render () {
@@ -150,7 +187,11 @@ export class Post extends React.Component {
       voteScore = 0,
       body,
     } = this.props.post;
-    const { showAll, comments } = this.state;
+    const {
+      showAll,
+      comments,
+      makingComment
+    } = this.state;
 
     return (
       <MainContainer>
@@ -179,6 +220,14 @@ export class Post extends React.Component {
             }
           </BodyContainer>
         }
+        {
+          makingComment ?
+            <CreateComment handleCancel={this.handleCancel} handleSubmit={this.handleSubmit}/>
+          :
+            <BtnMakeComment onClick={this.handleMakeComment}>
+              Make comment
+            </BtnMakeComment>
+        }
       </MainContainer>
     )
   }
@@ -187,7 +236,8 @@ export class Post extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     upVote: (id) => dispatch(upVote(id)),
-    downVote: (id) => dispatch(downVote(id))
+    downVote: (id) => dispatch(downVote(id)),
+    increaseCommentCount: (postId) => dispatch(increaseCommentCount(postId))
   }
 }
 

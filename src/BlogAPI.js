@@ -37,6 +37,10 @@ export const handleVote = (id, option) => {
   fetch(`${api}/posts/${id}`, {headers, method: "POST", body: JSON.stringify(option)})
 }
 
+export const addComment = (comment) => {
+  fetch(`${api}/comments`, {headers, method: "POST", body: JSON.stringify(comment)})
+}
+
 export const getPostComments = (id) =>
   fetch(`${api}/posts/${id}/comments`, {headers: { 'Authorization': token }})
     .then(res => res.json())

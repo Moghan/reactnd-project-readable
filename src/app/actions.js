@@ -6,6 +6,7 @@ export const HANDLE_VOTE = 'HANDLE_VOTE';
 export const GET_ALL_POSTS = 'GET_ALL_POSTS';
 export const SET_SORT_BY = 'SET_SORT_BY';
 export const SET_FILTER_BY = 'SET_FILTER_BY';
+export const INCREASE_COMMENT_COUNT = 'INCREASE_COMMENT_COUNT';
 
 export const addComment = (comment) => ({
   type: ADD_COMMENT,
@@ -47,4 +48,9 @@ export const setSortBy = (sortBy) => ({
 export const setFilterBy = (filterBy) => ({
   type: SET_FILTER_BY,
   filterBy
+})
+
+export const increaseCommentCount = (postId) => ({
+  type: INCREASE_COMMENT_COUNT,
+  postId
 })

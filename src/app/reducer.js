@@ -6,6 +6,7 @@ import {
   HANDLE_VOTE,
   SET_SORT_BY,
   SET_FILTER_BY,
+  INCREASE_COMMENT_COUNT
 } from './actions'
 
 import * as BlogAPI from '../BlogAPI';
@@ -38,7 +39,7 @@ const categories = (state = {}, action) => {
   }
 }
 
-const posts = (state = { sortBy: "timestamp", filterBy: ""}, action) => {
+const posts = (state = { sortBy: "timestamp", filterBy: "", pokeReload: false }, action) => {
   switch(action.type) {
     case SET_POSTS:
       const { posts } = action;
@@ -79,6 +80,19 @@ const posts = (state = { sortBy: "timestamp", filterBy: ""}, action) => {
         ...state,
         filterBy
       }
+    case INCREASE_COMMENT_COUNT: {
+      const { postId } = action;
+      let modifyPost = state.posts.filter(post => post.id === postId);
+      modifyPost =  {
+        ...modifyPost[0],
+        commentCount: modifyPost[0].commentCount + 1
+      }
+      const restOfPosts = state.posts.filter(post => post.id !== postId);
+      return {
+        ...state,
+        posts: [ ...restOfPosts, modifyPost]
+      }
+    }
     default: return state;
   }
 }

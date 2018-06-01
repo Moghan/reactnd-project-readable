@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PostItem from '../PostItem';
+import * as BlogAPI from '../../BlogAPI';
 
 export class PostList extends React.Component {
+
   render () {
     const { posts = [], sortBy, filterBy} = this.props;
     return (
