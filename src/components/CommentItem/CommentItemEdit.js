@@ -38,7 +38,7 @@ const Date = styled.div`
   margin: 0 5px;
 `
 
-export class CommentItem extends React.Component {
+export default class CommentItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -46,16 +46,16 @@ export class CommentItem extends React.Component {
       editMode: false
     }
 
-    this.handleOnClickEdit = this.handleOnClickEdit.bind(this);
-    this.handleOnClickDelete = this.handleOnClickDelete.bind(this);
+    this.handleOnClickSubmit = this.handleOnClickSubmit.bind(this);
+    this.handleOnClickCancel = this.handleOnClickCancel.bind(this);
   }
 
-  handleOnClickDelete() {
-    this.props.handleDelete(this.props.comment.id);
+  handleOnClickSubmit() {
+    this.props.handleSubmit();
   }
 
-  handleOnClickEdit() {
-    this.props.handleEdit(this.props.comment.id);
+  handleOnClickCancel() {
+    this.props.handleCancel();
   }
 
   render() {
@@ -64,17 +64,18 @@ export class CommentItem extends React.Component {
       timestamp,
       author
     } = this.props.comment;
+    const { editMode } = this.state;
 
     return (
       <CommentContainer>
         <Header>
-          <Author>{author}</Author>
+          <Author>EDIT VERSION</Author>
           commented
           <Date>
             <Timestamp time={timestamp} format='date' />
           </Date>
-          <BtnEdit onClick={this.handleOnClickEdit}>Edit</BtnEdit>
-          <BtnDelete onClick={this.handleOnClickDelete}>Delete</BtnDelete>
+          <BtnSubmit onClick={this.handleOnClickSubmit}>Submit</BtnSubmit>
+          <BtnCancel onClick={this.handleOnClickCancel}>Cancel</BtnCancel>
         </Header>
         <Body>
           <Text>
