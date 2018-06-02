@@ -17,7 +17,6 @@ const SysbarContainer = styled.div`
 const MainContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  border: 3px solid green;
 `
 const SecContainer = styled.div`
   display: flex;

@@ -12,12 +12,12 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px 0;
-  border: 2px solid red;
+  
 `
 
 const PostContainer = styled.div`
   display: flex;
-  border: 2px solid red;
+  border-top: 2px solid black;
 `
 const BodyContainer = styled.div`
   flex: display;
@@ -98,7 +98,6 @@ const BtnMakeComment = styled.button`
 
 const Title = styled.h5`
   margin: 0 20px;
-  border: 2px solid red;
   &:hover {
     text-decoration: underline;
     cursor: pointer;
@@ -109,7 +108,6 @@ const Title = styled.h5`
 const Timestamp = styled.h6`
   margin: 0 20px;
   font-weight: lighter;
-  border: 2px solid red;
 `
 
 
@@ -137,9 +135,6 @@ export class Post extends React.Component {
 
   loadComments() {
     BlogAPI.getPostComments(this.props.post.id).then((comments) => {
-      /*this.setState( {
-        comments
-      });*/
       this.props.setComments(this.props.post.id, comments);
     });
   }
@@ -154,8 +149,6 @@ export class Post extends React.Component {
       parentId: this.props.post.id
     }
     this.props.increaseCommentCount(this.props.post.id);
-    //BlogAPI.addComment(comment);
-    //this.loadComments();
     this.props.addComment(this.props.post.id, comment);
     this.setState({
       makingComment: false

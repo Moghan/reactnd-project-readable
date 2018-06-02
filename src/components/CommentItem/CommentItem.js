@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Timestamp from 'react-timestamp';
+import { connect } from 'react-redux';
+import { voteComment } from '../../app/actions';
 
 const CommentContainer = styled.div`
   margin: 5px 0;
@@ -23,6 +25,7 @@ const BtnSubmit = styled.button`
 const BtnDelete = styled.button`
   padding: 0 4px;
   font-size: 0.5rem;
+  margin-right: 10px;
 `
 const BtnCancel = styled.button`
   padding: 0 4px;
@@ -38,6 +41,14 @@ const Date = styled.div`
   margin: 0 5px;
 `
 
+const VoteScore = styled.div`
+  margin: 0 5px;
+`
+
+const BtnVote = styled.button`
+  font-size: 0.5rem;
+`
+
 export class CommentItem extends React.Component {
   constructor(props) {
     super(props);
@@ -48,6 +59,18 @@ export class CommentItem extends React.Component {
 
     this.handleOnClickEdit = this.handleOnClickEdit.bind(this);
     this.handleOnClickDelete = this.handleOnClickDelete.bind(this);
+    this.handleOnUpVote = this.handleOnUpVote.bind(this);
+    this.handleOnDownVote = this.handleOnDownVote.bind(this);
+  }
+
+  handleOnUpVote() {
+    const { id, parentId } = this.props.comment;
+    this.props.voteComment(id, parentId, "upVote");
+  }
+
+  handleOnDownVote() {
+    const { id, parentId } = this.props.comment;
+    this.props.voteComment(id, parentId, "downVote");
   }
 
   handleOnClickDelete() {
@@ -63,7 +86,8 @@ export class CommentItem extends React.Component {
     const {
       body,
       timestamp,
-      author
+      author,
+      voteScore
     } = this.props.comment;
 
     return (
@@ -76,6 +100,10 @@ export class CommentItem extends React.Component {
           </Date>
           <BtnEdit onClick={this.handleOnClickEdit}>Edit</BtnEdit>
           <BtnDelete onClick={this.handleOnClickDelete}>Delete</BtnDelete>
+          VoteScore :
+          <VoteScore>{voteScore}</VoteScore>
+          <BtnVote onClick={this.handleOnUpVote}>Up</BtnVote>
+          <BtnVote onClick={this.handleOnDownVote}>Down</BtnVote>
         </Header>
         <Body>
           <Text>
@@ -86,3 +114,14 @@ export class CommentItem extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    voteComment: (comment_id, post_id, vote) => dispatch(voteComment(comment_id, post_id, vote))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentItem);

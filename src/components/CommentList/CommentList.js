@@ -1,5 +1,5 @@
 import React from 'react';
-import { CommentItem } from '../CommentItem/CommentItem';
+import CommentItem from '../CommentItem/CommentItem';
 import CommentItemEdit from '../CommentItem/CommentItemEdit';
 import { connect } from 'react-redux';
 import { editComment, deleteComment } from '../../app/actions';

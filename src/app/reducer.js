@@ -12,6 +12,7 @@ import {
   EDIT_COMMENT,
   DELETE_COMMENT,
   EDIT_POST,
+  COMMENT_VOTE,
 } from './actions'
 
 import * as BlogAPI from '../BlogAPI';
@@ -52,6 +53,23 @@ const comments = (state = initialState, action) => {
       return {
         ...state,
         [post_id]: state[post_id].filter((comment) => comment.id !== comment_id)
+      }
+    }
+    case COMMENT_VOTE: {
+      console.log('reduce');
+      console.log(state);
+      const {comment_id, post_id, option} = action;
+      const changeValue = option.option === "upVote" ? 1 : -1;
+      let modifyComment = state[post_id].filter(comment => comment.id === comment_id);
+      modifyComment =  {
+        ...modifyComment[0],
+        voteScore: modifyComment[0].voteScore + changeValue
+      }
+      const restOfComments = state[post_id].filter(comment => comment.id !== comment_id);
+      BlogAPI.commentVote(comment_id, option);
+      return {
+        ...state,
+        [post_id]: [...restOfComments, modifyComment]
       }
     }
     default: return state;
