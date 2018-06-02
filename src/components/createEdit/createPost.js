@@ -6,6 +6,7 @@ import { addPost } from '../../app/actions';
 import uuidv4 from 'uuid/v4';
 
 
+
 const CloseCreateContact = styled.button`
 `
 const CreateContactForm = styled.form`
@@ -61,7 +62,7 @@ class PostForm extends React.Component {
     event.preventDefault();
     const { author, title, category, body } = this.state;
 
-    const timestamp = Date.now();
+    const timestamp = new Date();
     const id = uuidv4();
 
     this.props.addPost({

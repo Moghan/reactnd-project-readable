@@ -7,6 +7,7 @@ import CommentList from '../CommentList';
 import CreateComment  from '../CommentItem/CreateCommentItem';
 import { increaseCommentCount, setComments, addComment } from '../../app/actions';
 import { Link, withRouter } from 'react-router-dom';
+import Timestamp from 'react-timestamp';
 
 const MainContainer = styled.div`
   display: flex;
@@ -104,13 +105,11 @@ const Title = styled.h5`
   }
 `
 
-
-const Timestamp = styled.h6`
+const Date = styled.div`
   margin: 0 20px;
+  font-size: 0.8rem;
   font-weight: lighter;
 `
-
-
 
 
 export class Post extends React.Component {
@@ -221,7 +220,9 @@ export class Post extends React.Component {
           <Image />
           <InfoContainer>
             <LinkedTitle />
-            <Timestamp>{timestamp}</Timestamp>
+            <Date>
+              <Timestamp time={timestamp} format='date' />
+            </Date>
             <CommentCount onClick={this.handleOnClickComments}>Comments: {commentCount}</CommentCount>
           </ InfoContainer>
           <Link to={`/create-edit-view/${id}`} style={{marginLeft: "auto"}}>
