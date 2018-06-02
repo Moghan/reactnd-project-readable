@@ -49,10 +49,13 @@ export const deletePost = (id) => {
   fetch(`${api}/posts/${id}`, {headers, method: "DELETE"})
 }
 
-export const _getPost = (id) =>
+export const getPost = (id) =>
   fetch(`${api}/posts/${id}`, {headers})
 
-export const getPost = (id) => 
-  fetch(
-    `http://localhost:3001/posts/${id}`,{ headers: { 'Authorization': token }}
-)
+export const editComment = (id, comment) => {
+  fetch(`${api}/comments/${id}`, {headers, method: "PUT", body: JSON.stringify(comment) })
+}
+
+export const deleteComment = (id) => {
+  fetch(`${api}/comments/${id}`, {headers, method: "DELETE" })
+}

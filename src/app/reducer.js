@@ -9,6 +9,8 @@ import {
   INCREASE_COMMENT_COUNT,
   DELETE_POST,
   SET_COMMENTS,
+  EDIT_COMMENT,
+  DELETE_COMMENT,
 } from './actions'
 
 import * as BlogAPI from '../BlogAPI';
@@ -32,6 +34,23 @@ const comments = (state = initialState, action) => {
       return {
         ...state,
         [post_id]: [...state[post_id], comment]
+      }
+    }
+    case EDIT_COMMENT: {
+      const {post_id, comment_id, comment } = action;
+      const restOfComments = state[post_id].filter((comment) => comment.id !== comment_id);
+      BlogAPI.editComment(comment_id, comment);
+      return {
+        ...state,
+        [post_id]: [...restOfComments, comment]
+      }
+    }
+    case DELETE_COMMENT: {
+      const { comment_id, post_id } = action;
+      BlogAPI.deleteComment(comment_id);
+      return {
+        ...state,
+        [post_id]: state[post_id].filter((comment) => comment.id !== comment_id)
       }
     }
     default: return state;

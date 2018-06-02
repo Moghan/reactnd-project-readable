@@ -63,6 +63,7 @@ export default class CommentItem extends React.Component {
       ...this.props.comment,
       body: this.state.body
     }
+    console.log("new edit body ", this.state.body);
     this.props.handleSubmit(comment);
   }
 

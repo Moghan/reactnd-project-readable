@@ -51,7 +51,8 @@ export class CommentItem extends React.Component {
   }
 
   handleOnClickDelete() {
-    this.props.handleDelete(this.props.comment.id);
+    const { id, parentId } = this.props.comment;
+    this.props.handleDelete(id, parentId);
   }
 
   handleOnClickEdit() {

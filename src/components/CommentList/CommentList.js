@@ -1,8 +1,10 @@
 import React from 'react';
 import { CommentItem } from '../CommentItem/CommentItem';
 import CommentItemEdit from '../CommentItem/CommentItemEdit';
+import { connect } from 'react-redux';
+import { editComment, deleteComment } from '../../app/actions';
 
-export default class CommentList extends React.Component {
+export class CommentList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,14 +19,14 @@ export default class CommentList extends React.Component {
   }
 
   handleSubmit(comment) {
-    console.log("submit, ", comment);
     this.setState({
       editCommentId: false
     })
+    this.props.editComment(comment.parentId, comment.id, comment);
   }
 
-  handleDelete() {
-    console.log("delete");
+  handleDelete(comment_id, post_id) {
+    this.props.deleteComment(comment_id, post_id);
   }
 
   handleCancel() {
@@ -55,3 +57,16 @@ export default class CommentList extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {}
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    editComment: (post_id, comment_id, body) => dispatch(editComment(post_id, comment_id, body)),
+    deleteComment: (comment_id, post_id) => dispatch(deleteComment(comment_id, post_id)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentList);

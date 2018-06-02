@@ -9,6 +9,8 @@ export const SET_FILTER_BY = 'SET_FILTER_BY';
 export const INCREASE_COMMENT_COUNT = 'INCREASE_COMMENT_COUNT';
 export const DELETE_POST = 'DELETE_POST';
 export const SET_COMMENTS = 'SET_COMMENTS';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 export const addComment = (post_id, comment) => ({
   type: ADD_COMMENT,
@@ -67,4 +69,17 @@ export const setComments = (id, comments) => ({
   type: SET_COMMENTS,
   id,
   comments
+})
+
+export const editComment = (post_id, comment_id, comment) => ({
+  type: EDIT_COMMENT,
+  post_id,
+  comment_id,
+  comment
+})
+
+export const deleteComment = (comment_id, post_id) => ({
+  type: DELETE_COMMENT,
+  comment_id,
+  post_id
 })
