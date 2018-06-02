@@ -30,14 +30,12 @@ export class CommentList extends React.Component {
   }
 
   handleCancel() {
-    console.log("cancel");
     this.setState({
       editCommentId: false
     })
   }
 
   handleEdit(id) {
-    console.log("edit", id);
     this.setState({
       editCommentId: id
     })
@@ -48,10 +46,12 @@ export class CommentList extends React.Component {
     const { editCommentId } = this.state;
     return (
       <div>
-        { comments.map((comment, index) =>
-          editCommentId === comment.id ?
-            <CommentItemEdit key={index} comment={comment} handleCancel={this.handleCancel} handleSubmit={this.handleSubmit}/>:
-            <CommentItem key={index} comment={comment} handleEdit={this.handleEdit} handleDelete={this.handleDelete}/>
+        { comments
+          .sort((a, b) => a.timestamp > b.timestamp)
+          .map((comment, index) =>
+            editCommentId === comment.id ?
+              <CommentItemEdit key={index} comment={comment} handleCancel={this.handleCancel} handleSubmit={this.handleSubmit}/>:
+              <CommentItem key={index} comment={comment} handleEdit={this.handleEdit} handleDelete={this.handleDelete}/>
         )}
       </div>
     )

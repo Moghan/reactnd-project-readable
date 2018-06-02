@@ -17,20 +17,13 @@ const BtnEdit = styled.button`
   padding: 0 4px;
   margin-left: 10px;
 `
-const BtnSubmit = styled.button`
-  font-size: 0.5rem;
-  padding: 0 4px;
-  margin-left: 10px;
-`
+
 const BtnDelete = styled.button`
   padding: 0 4px;
   font-size: 0.5rem;
   margin-right: 10px;
 `
-const BtnCancel = styled.button`
-  padding: 0 4px;
-  font-size: 0.5rem;
-`
+
 const Body = styled.div`;`
 const Text = styled.div``
 const Author = styled.div`

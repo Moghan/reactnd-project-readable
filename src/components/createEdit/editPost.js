@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { editPost } from '../../app/actions';
-import uuidv4 from 'uuid/v4';
-import * as BlogAPI from '../../BlogAPI';
-
 
 const CloseCreateContact = styled.button`
 `
@@ -70,7 +67,7 @@ class PostForm extends React.Component {
       timestamp,
       voteScore: 1,
       deleted: false,
-      category: "react",
+      category,
       commentCount
     };
 

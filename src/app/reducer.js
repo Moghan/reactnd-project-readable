@@ -56,8 +56,6 @@ const comments = (state = initialState, action) => {
       }
     }
     case COMMENT_VOTE: {
-      console.log('reduce');
-      console.log(state);
       const {comment_id, post_id, option} = action;
       const changeValue = option.option === "upVote" ? 1 : -1;
       let modifyComment = state[post_id].filter(comment => comment.id === comment_id);

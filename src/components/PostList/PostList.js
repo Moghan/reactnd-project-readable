@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PostItem from '../PostItem';
-import * as BlogAPI from '../../BlogAPI';
 import { deletePost } from '../../app/actions';
 
 export class PostList extends React.Component {

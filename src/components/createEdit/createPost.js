@@ -55,10 +55,8 @@ class PostForm extends React.Component {
   }
 
   handleSubmit(event) {
-    console.log(this.props);
     event.preventDefault();
     const { author, title, category, body } = this.state;
-    const post = {}
 
     const timestamp = Date.now();
     const id = uuidv4();
@@ -71,7 +69,7 @@ class PostForm extends React.Component {
       timestamp,
       voteScore: 1,
       deleted: false,
-      category: "react",
+      category,
     });
 
     this.props.history.push("/");
@@ -85,7 +83,6 @@ class PostForm extends React.Component {
       body
     } = this.state;
 
-    console.log(title, author, category,  body);
     return (
       <div>
         <CreateContactForm onSubmit={this.handleSubmit}>

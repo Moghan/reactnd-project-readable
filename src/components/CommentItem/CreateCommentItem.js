@@ -36,7 +36,8 @@ export default class CreateCommit extends React.Component {
       id: uuidv4(),
       timestamp: Date.now(),
       body: this.state.body,
-      author: this.state.author
+      author: this.state.author,
+      voteScore: 1
     };
     this.props.handleSubmit(comment);
   }

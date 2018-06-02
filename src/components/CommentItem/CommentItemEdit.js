@@ -10,26 +10,19 @@ const Header = styled.div`
   font-size: small;
   margin-bottom: 3px;
 `;
-const BtnEdit = styled.button`
-  font-size: 0.5rem;
-  padding: 0 4px;
-  margin-left: 10px;
-`
+
 const BtnSubmit = styled.button`
   font-size: 0.5rem;
   padding: 0 4px;
   margin-left: 10px;
 `
-const BtnDelete = styled.button`
-  padding: 0 4px;
-  font-size: 0.5rem;
-`
+
 const BtnCancel = styled.button`
   padding: 0 4px;
   font-size: 0.5rem;
 `
 const Body = styled.div`;`
-const Text = styled.div``
+
 const Author = styled.div`
   margin-right: 5px;
   font-weight: bold;
@@ -78,7 +71,6 @@ export default class CommentItem extends React.Component {
       timestamp,
       author
     } = this.props.comment;
-    const { editMode } = this.state;
 
     return (
       <CommentContainer>
