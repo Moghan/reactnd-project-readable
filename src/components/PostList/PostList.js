@@ -9,16 +9,10 @@ export class PostList extends React.Component {
     super(props);
 
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-  }
-
-  handleEdit() {
-    console.log("TODO: postlist, edit");
   }
 
   handleDelete(id) {
     this.props.deletePost(id);
-    BlogAPI.deletePost(id);
   }
   render () {
     const { posts = [], sortBy, filterBy} = this.props;
@@ -43,7 +37,7 @@ export class PostList extends React.Component {
               }
             })
             .map((post, index) =>
-              <PostItem key={index} post={post} handleDelete={this.handleDelete} handleEdit={this.handleEdit}/>
+              <PostItem key={index} post={post} handleDelete={this.handleDelete}/>
         )}        
       </div>
     )

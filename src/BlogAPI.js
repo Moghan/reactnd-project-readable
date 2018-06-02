@@ -59,3 +59,7 @@ export const editComment = (id, comment) => {
 export const deleteComment = (id) => {
   fetch(`${api}/comments/${id}`, {headers, method: "DELETE" })
 }
+
+export const editPost = (id, post) => {
+  fetch(`${api}/posts/${id}`, {headers, method: "PUT", body: JSON.stringify(post) })
+}

@@ -7,7 +7,8 @@ import Category from '../components/Category';
 import Post from '../components/PostItem';
 import PostDetails from '../components/PostItem/PostDetails';
 import Default from '../components/default';
-import CreateEdit from '../components/createEdit';
+import EditPost from '../components/createEdit/editPost';
+import CreatePost from '../components/createEdit/createPost';
 import styled from 'styled-components';
 import * as BlogAPI from '../BlogAPI';
 import { setCategories, setPosts } from './actions';
@@ -35,7 +36,8 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Default} />
               <Route exact path="/post" component={Post} />
-              <Route exact path="/create-edit-view" component={CreateEdit} />
+              <Route exact path="/create-edit-view" component={CreatePost} />
+              <Route exact path="/create-edit-view/:post_id" component={EditPost} />
               <Route exact path="/:category" component={Category} />
               <Route exact path="/:category/:post_id" component={PostDetails} />
             </Switch>

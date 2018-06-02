@@ -11,6 +11,7 @@ export const DELETE_POST = 'DELETE_POST';
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const EDIT_POST = 'EDIT_POST';
 
 export const addComment = (post_id, comment) => ({
   type: ADD_COMMENT,
@@ -82,4 +83,10 @@ export const deleteComment = (comment_id, post_id) => ({
   type: DELETE_COMMENT,
   comment_id,
   post_id
+})
+
+export const editPost = (post_id, post) => ({
+  type: EDIT_POST,
+  post_id,
+  post
 })

@@ -85,7 +85,6 @@ const BtnDecrease = styled.button`
 
 const BtnEdit = styled.button`
   align-self: flex-start;
-  margin-left: auto;
 `
 
 const BtnDelete = styled.button`
@@ -132,7 +131,6 @@ export class Post extends React.Component {
     this.handleMakeComment = this.handleMakeComment.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleOnClickEdit = this.handleOnClickEdit.bind(this);
     this.handleOnClickDelete = this.handleOnClickDelete.bind(this);
     this.handleOnClickComments = this.handleOnClickComments.bind(this);
   }
@@ -168,10 +166,6 @@ export class Post extends React.Component {
     this.setState({
       makingComment: false
     });
-  }
-
-  handleOnClickEdit() {
-    this.props.handleEdit(this.props.post.id);
   }
 
   handleOnClickDelete() {
@@ -217,7 +211,7 @@ export class Post extends React.Component {
       makingComment
     } = this.state;
     //const comments = this.state.comments.filter((comment) => comment.parentId === id);
-    const { comments } = this.props;
+    const { comments = [] } = this.props;
 
     const LinkedTitle = withRouter(({history}) => (
       <Title onClick={() => {history.push(`/${category}/${id}`)}}>{title}</Title>
@@ -237,7 +231,9 @@ export class Post extends React.Component {
             <Timestamp>{timestamp}</Timestamp>
             <CommentCount onClick={this.handleOnClickComments}>Comments: {commentCount}</CommentCount>
           </ InfoContainer>
-          <BtnEdit onClick={this.handleOnClickEdit}>Edit</BtnEdit>
+          <Link to={`/create-edit-view/${id}`} style={{marginLeft: "auto"}}>
+            <BtnEdit>Edit</BtnEdit>
+          </Link>
           <BtnDelete onClick={this.handleOnClickDelete}>Delete</BtnDelete>
         </PostContainer>
         { showComments && 

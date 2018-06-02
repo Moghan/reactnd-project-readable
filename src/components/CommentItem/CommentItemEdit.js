@@ -44,7 +44,8 @@ export default class CommentItem extends React.Component {
 
     this.state = {
       editMode: false,
-      body: ''
+      body: this.props.comment.body,
+      isModified: false
     }
 
     this.handleOnClickSubmit = this.handleOnClickSubmit.bind(this);
@@ -54,7 +55,8 @@ export default class CommentItem extends React.Component {
 
   handleOnChange(event) {
     this.setState({
-      body: event.target.value
+      body: event.target.value,
+      isModified: true
     });
   }
 
@@ -63,7 +65,6 @@ export default class CommentItem extends React.Component {
       ...this.props.comment,
       body: this.state.body
     }
-    console.log("new edit body ", this.state.body);
     this.props.handleSubmit(comment);
   }
 
@@ -72,7 +73,6 @@ export default class CommentItem extends React.Component {
   }
 
   render() {
-    console.log(this.state.body);
     const {
       body,
       timestamp,
@@ -83,12 +83,12 @@ export default class CommentItem extends React.Component {
     return (
       <CommentContainer>
         <Header>
-          <Author>EDIT VERSION</Author>
+          <Author>{author}</Author>
           commented
           <Date>
             <Timestamp time={timestamp} format='date' />
           </Date>
-          <BtnSubmit onClick={this.handleOnClickSubmit}>Submit</BtnSubmit>
+          <BtnSubmit onClick={this.handleOnClickSubmit} disabled={!this.state.isModified}>Submit</BtnSubmit>
           <BtnCancel onClick={this.handleOnClickCancel}>Cancel</BtnCancel>
         </Header>
         <Body>

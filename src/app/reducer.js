@@ -11,6 +11,7 @@ import {
   SET_COMMENTS,
   EDIT_COMMENT,
   DELETE_COMMENT,
+  EDIT_POST,
 } from './actions'
 
 import * as BlogAPI from '../BlogAPI';
@@ -125,9 +126,19 @@ const posts = (state = { sortBy: "timestamp", filterBy: "", pokeReload: false },
     }
     case DELETE_POST:{
       const { id } = action;
+      BlogAPI.deletePost(id);
       return {
         ...state,
         posts: state.posts.filter((post) => post.id !== id)
+      }
+    }
+    case EDIT_POST: {
+      const { post_id, post } = action;
+      BlogAPI.editPost(post_id, post);
+      const restOfPosts = state.posts.filter((post) => post.id !== post_id);
+      return {
+        ...state,
+        posts: [...restOfPosts, post]
       }
     }
     default: return state;
