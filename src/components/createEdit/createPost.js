@@ -62,7 +62,7 @@ class PostForm extends React.Component {
     event.preventDefault();
     const { author, title, category, body } = this.state;
 
-    const timestamp = new Date();
+    const timestamp = Date.now();
     const id = uuidv4();
 
     this.props.addPost({

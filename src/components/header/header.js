@@ -51,13 +51,12 @@ export class Header extends React.Component {
   handleOnChange(event) {
     this.props.setSortBy(event.target.value);
   }
-  
+
   render() {
     const activeLinkStyle = {
       color: 'green'
     }
     const { categories = [] } = this.props;
-    console.log('fffff ',this.props);
     return (
       <header className="App-header">
         <SysbarContainer>

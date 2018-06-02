@@ -20,12 +20,12 @@ export class PostList extends React.Component {
         { posts
             .sort((a,b) => {
               if(sortBy === 'timestamp') {
-                return a.timestamp > b.timestamp ? 1: -1;
+                return a.timestamp < b.timestamp;
               }
               else if(sortBy === 'voteScore') {
-                return a.voteScore < b.voteScore ? 1: -1;
+                return a.voteScore < b.voteScore;
               }
-              else return 0; // TODO: throw exception
+              else return 0;
             })
             .filter((post) => {
               switch(filterBy) {

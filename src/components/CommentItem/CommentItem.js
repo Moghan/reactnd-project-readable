@@ -30,7 +30,7 @@ const Author = styled.div`
   margin-right: 5px;
   font-weight: bold;
 `
-const Date = styled.div`
+const DateContainer = styled.div`
   margin: 0 5px;
 `
 
@@ -88,9 +88,9 @@ export class CommentItem extends React.Component {
         <Header>
           <Author>{author}</Author>
           commented
-          <Date>
-            <Timestamp time={timestamp} format='date' />
-          </Date>
+          <DateContainer>
+            <Timestamp time={new Date(timestamp)}/>
+          </DateContainer>
           <BtnEdit onClick={this.handleOnClickEdit}>Edit</BtnEdit>
           <BtnDelete onClick={this.handleOnClickDelete}>Delete</BtnDelete>
           VoteScore :

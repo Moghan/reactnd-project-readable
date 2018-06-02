@@ -105,7 +105,7 @@ const Title = styled.h5`
   }
 `
 
-const Date = styled.div`
+const DateContainer = styled.div`
   margin: 0 20px;
   font-size: 0.8rem;
   font-weight: lighter;
@@ -185,7 +185,7 @@ export class Post extends React.Component {
   handleOnClickComments() {
     this.setState((prevState) => ({
       showComments: !prevState.showComments
-    }));  
+    }));
   }
 
   render () {
@@ -202,7 +202,6 @@ export class Post extends React.Component {
       showComments,
       makingComment
     } = this.state;
-    //const comments = this.state.comments.filter((comment) => comment.parentId === id);
     const { comments = [] } = this.props;
 
     const LinkedTitle = withRouter(({history}) => (
@@ -220,9 +219,9 @@ export class Post extends React.Component {
           <Image />
           <InfoContainer>
             <LinkedTitle />
-            <Date>
-              <Timestamp time={timestamp} format='date' />
-            </Date>
+            <DateContainer>
+              <Timestamp time={new Date(timestamp)}/>
+            </DateContainer>
             <CommentCount onClick={this.handleOnClickComments}>Comments: {commentCount}</CommentCount>
           </ InfoContainer>
           <Link to={`/create-edit-view/${id}`} style={{marginLeft: "auto"}}>
