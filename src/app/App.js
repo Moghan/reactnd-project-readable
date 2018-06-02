@@ -31,7 +31,10 @@ class App extends Component {
     return (
       <Provider store={this.props.store}>
         <div className='App'>
-          <Header />
+          <Switch>
+            <Route path="/:category" component={Header} />
+            <Route path="/" component={Header} />
+          </Switch>
           <Body>
             <Switch>
               <Route exact path="/" component={Default} />

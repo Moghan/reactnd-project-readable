@@ -26,6 +26,9 @@ const ContactDetails = styled.div`
 const Input = styled.input`
   margin: 5px 0;
 `
+const Select = styled.select`
+  margin: 5px 0;
+`
 
 const InputMessage = styled.textarea`
 `
@@ -39,7 +42,7 @@ class PostForm extends React.Component {
       isDefaultValuesSet: false,
       title: '',
       author: '',
-      category: '',
+      category: 'react',
       body: 'Write your post here.',
     };
 
@@ -70,6 +73,7 @@ class PostForm extends React.Component {
       voteScore: 1,
       deleted: false,
       category,
+      commentCount: 0
     });
 
     this.props.history.push("/");
@@ -89,7 +93,11 @@ class PostForm extends React.Component {
           <ContactDetails>
             <Input id='title' type='text' name='title' defaultValue={title} placeholder='Title' onChange={this.handleChange}/>
             <Input id='author' type='text' name='author' defaultValue={author} placeholder='Author' onChange={this.handleChange}/>
-            <Input id='category' type='text' name='category' defaultValue={category} placeholder='Category' onChange={this.handleChange}/>
+            <Select id='category' name='category' defaultValue={category} onChange={this.handleChange}>
+                <option value="react">React</option>
+                <option value="redux">Redux</option>
+                <option value="udacity">Udacity</option>
+              </Select>
             <InputMessage id='body' name="body" rows="10" cols="30" onChange={this.handleChange} defaultValue={body}></InputMessage>
             <AddContactButton disabled={!this.state.isModified || !(author && title && category && body)} onClick={this.handleSubmit}>{this.props.match.params.post_id ? 'Submit edit' : 'Create Post'}</AddContactButton>
             <Link to='/'>

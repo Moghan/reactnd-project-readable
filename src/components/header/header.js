@@ -1,7 +1,7 @@
 import React from 'react';
 //import logo from '../../logo.svg';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setSortBy } from '../../app/actions';
 
@@ -51,9 +51,13 @@ export class Header extends React.Component {
   handleOnChange(event) {
     this.props.setSortBy(event.target.value);
   }
-
+  
   render() {
+    const activeLinkStyle = {
+      color: 'green'
+    }
     const { categories = [] } = this.props;
+    console.log('fffff ',this.props);
     return (
       <header className="App-header">
         <SysbarContainer>
@@ -75,15 +79,15 @@ export class Header extends React.Component {
             </SortByPicker>
             <CategoriesContainer>
               <CategoryButton onClick={this.handleSetFilter}>
-                <Link to={`/all`}>
+                <NavLink to={`/all`} style={ 'all' === this.props.match.params.category? activeLinkStyle : {} }>
                   All
-                </Link>
+                </NavLink>
               </CategoryButton>
               { categories.map((category, index) => (
                 <CategoryButton key={index}>
-                  <Link to={`/${category.path}`}>
+                  <NavLink to={`/${category.path}`} style={ category.path === this.props.match.params.category? activeLinkStyle : {} }>
                     { category.name }
-                  </Link>
+                  </NavLink>
                 </CategoryButton>
               ))}
             </CategoriesContainer>
@@ -106,4 +110,4 @@ const mapDispatchToProps = ( dispatch ) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
