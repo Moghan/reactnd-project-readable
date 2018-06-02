@@ -43,15 +43,27 @@ export default class CommentItem extends React.Component {
     super(props);
 
     this.state = {
-      editMode: false
+      editMode: false,
+      body: ''
     }
 
     this.handleOnClickSubmit = this.handleOnClickSubmit.bind(this);
     this.handleOnClickCancel = this.handleOnClickCancel.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+  }
+
+  handleOnChange(event) {
+    this.setState({
+      body: event.target.value
+    });
   }
 
   handleOnClickSubmit() {
-    this.props.handleSubmit();
+    const comment = {
+      ...this.props.comment,
+      body: this.state.body
+    }
+    this.props.handleSubmit(comment);
   }
 
   handleOnClickCancel() {
@@ -59,6 +71,7 @@ export default class CommentItem extends React.Component {
   }
 
   render() {
+    console.log(this.state.body);
     const {
       body,
       timestamp,
@@ -78,9 +91,7 @@ export default class CommentItem extends React.Component {
           <BtnCancel onClick={this.handleOnClickCancel}>Cancel</BtnCancel>
         </Header>
         <Body>
-          <Text>
-            { body }
-          </Text>
+          <input type='text' name='body' defaultValue={body} onChange={this.handleOnChange}/>
         </Body>
       </CommentContainer>
     )

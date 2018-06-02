@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as BlogAPI from '../../BlogAPI';
 import CommentList from '../CommentList';
 import CreateComment  from '../CommentItem/CreateCommentItem';
-import { increaseCommentCount } from '../../app/actions';
+import { increaseCommentCount, setComments, addComment } from '../../app/actions';
 import { Link, withRouter } from 'react-router-dom';
 
 const MainContainer = styled.div`
@@ -139,9 +139,10 @@ export class Post extends React.Component {
 
   loadComments() {
     BlogAPI.getPostComments(this.props.post.id).then((comments) => {
-      this.setState( {
+      /*this.setState( {
         comments
-      });
+      });*/
+      this.props.setComments(this.props.post.id, comments);
     });
   }
 
@@ -155,8 +156,9 @@ export class Post extends React.Component {
       parentId: this.props.post.id
     }
     this.props.increaseCommentCount(this.props.post.id);
-    BlogAPI.addComment(comment);
-    this.loadComments();
+    //BlogAPI.addComment(comment);
+    //this.loadComments();
+    this.props.addComment(this.props.post.id, comment);
     this.setState({
       makingComment: false
     })
@@ -214,7 +216,8 @@ export class Post extends React.Component {
       showComments,
       makingComment
     } = this.state;
-    const comments = this.state.comments.filter((comment) => comment.parentId === id);
+    //const comments = this.state.comments.filter((comment) => comment.parentId === id);
+    const { comments } = this.props;
 
     const LinkedTitle = withRouter(({history}) => (
       <Title onClick={() => {history.push(`/${category}/${id}`)}}>{title}</Title>
@@ -266,12 +269,15 @@ const mapDispatchToProps = (dispatch) => {
   return {
     upVote: (id) => dispatch(upVote(id)),
     downVote: (id) => dispatch(downVote(id)),
-    increaseCommentCount: (postId) => dispatch(increaseCommentCount(postId))
+    increaseCommentCount: (postId) => dispatch(increaseCommentCount(postId)),
+    setComments: (id, comments) => dispatch(setComments(id, comments)),
+    addComment: (id, comment) => dispatch(addComment(id, comment)),
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
+    comments: state.comments[ownProps.post.id]
   }
 }
 

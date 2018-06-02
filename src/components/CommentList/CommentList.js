@@ -16,8 +16,8 @@ export default class CommentList extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  handleSubmit() {
-    console.log("submit");
+  handleSubmit(comment) {
+    console.log("submit, ", comment);
     this.setState({
       editCommentId: false
     })

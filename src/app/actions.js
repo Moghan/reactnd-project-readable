@@ -8,10 +8,12 @@ export const SET_SORT_BY = 'SET_SORT_BY';
 export const SET_FILTER_BY = 'SET_FILTER_BY';
 export const INCREASE_COMMENT_COUNT = 'INCREASE_COMMENT_COUNT';
 export const DELETE_POST = 'DELETE_POST';
+export const SET_COMMENTS = 'SET_COMMENTS';
 
-export const addComment = (comment) => ({
+export const addComment = (post_id, comment) => ({
   type: ADD_COMMENT,
-  comment
+  comment,
+  post_id
 })
 
 export const setCategories = (categories) => ({
@@ -59,4 +61,10 @@ export const increaseCommentCount = (postId) => ({
 export const deletePost = id => ({
   type: DELETE_POST,
   id
+})
+
+export const setComments = (id, comments) => ({
+  type: SET_COMMENTS,
+  id,
+  comments
 })

@@ -7,7 +7,8 @@ import {
   SET_SORT_BY,
   SET_FILTER_BY,
   INCREASE_COMMENT_COUNT,
-  DELETE_POST
+  DELETE_POST,
+  SET_COMMENTS,
 } from './actions'
 
 import * as BlogAPI from '../BlogAPI';
@@ -18,12 +19,21 @@ const initialState = {};
 
 const comments = (state = initialState, action) => {
   switch(action.type) {
-    case ADD_COMMENT:
-      const { comment } = action;
+    case SET_COMMENTS: {
+      const { id, comments } = action;
       return {
         ...state,
-        [comment.timestamp]: comment,
+        [id]: comments
       }
+    }
+    case ADD_COMMENT: {
+      const { post_id, comment } = action;
+      BlogAPI.addComment(comment);
+      return {
+        ...state,
+        [post_id]: [...state[post_id], comment]
+      }
+    }
     default: return state;
   }
 }
