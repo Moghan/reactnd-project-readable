@@ -10,8 +10,15 @@ export class PostDetails extends React.Component {
     this.props.history.push("/");
   }
 
+  componentDidUpdate() {
+    if (this.props.match.params.post_id && !this.props.post.length) { 
+      this.props.history.replace(`/404/${this.props.match.params.post_id}`);
+    }
+  }
+
   render () {
-    const { post } = this.props;
+    const [ post ] = this.props.post;
+    
     return (
       <div>
         { post &&
@@ -24,7 +31,7 @@ export class PostDetails extends React.Component {
 
 const mapStateToProps = ({posts: {posts: postList = []}}, ownProps) => {
   return {
-    post: postList.filter((post) => post.id === ownProps.match.params.post_id)[0]
+    post: postList.filter((post) => post.id === ownProps.match.params.post_id),
   }
 }
 

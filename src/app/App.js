@@ -12,6 +12,7 @@ import CreatePost from '../components/createEdit/createPost';
 import styled from 'styled-components';
 import * as BlogAPI from '../BlogAPI';
 import { setCategories, setPosts } from './actions';
+import NotFoundPage from '../components/404/404';
 
 const Body = styled.div`
   width: 80%;
@@ -42,6 +43,7 @@ class App extends Component {
               <Route exact path="/create-edit-view" component={CreatePost} />
               <Route exact path="/create-edit-view/:post_id" component={EditPost} />
               <Route exact path="/:category" component={Category} />
+              <Route exact path="/404/:post_id" component={NotFoundPage} />
               <Route exact path="/:category/:post_id" component={PostDetails} />
             </Switch>
           </Body>
