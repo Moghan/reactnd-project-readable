@@ -110,26 +110,15 @@ const DateContainer = styled.div`
   font-size: 0.8rem;
   font-weight: lighter;
 `
-
+const Author = styled.h6`
+  margin: 0 20px;
+`
 
 export class Post extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showComments: this.props.showComments,
-      comments: [],
-      makingComment: false
-    }
-
-    this.handleUpVote = this.handleUpVote.bind(this);
-    this.handleDownVote = this.handleDownVote.bind(this);
-    this.handleOnClickTitle = this.handleOnClickTitle.bind(this);
-    this.handleMakeComment = this.handleMakeComment.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleOnClickDelete = this.handleOnClickDelete.bind(this);
-    this.handleOnClickComments = this.handleOnClickComments.bind(this);
+  state = {
+    showComments: this.props.showComments,
+    comments: [],
+    makingComment: false
   }
 
   loadComments() {
@@ -142,7 +131,7 @@ export class Post extends React.Component {
     this.loadComments();
   }
 
-  handleSubmit(comment) {
+  handleSubmit = comment => {
     comment = {
       ...comment,
       parentId: this.props.post.id
@@ -154,35 +143,32 @@ export class Post extends React.Component {
     })
   }
 
-  handleCancel() {
+  handleCancel = () => {
     this.setState({
       makingComment: false
     });
   }
 
-  handleOnClickDelete() {
+  handleOnClickDelete = () => {
     this.props.handleDelete(this.props.post.id);
   }
 
-  handleMakeComment() {
+  handleMakeComment = () => {
     this.setState((prevState) => ({
       ...prevState,
       makingComment: true
     }));
   }
 
-  handleUpVote() {
+  handleUpVote = () => {
     this.props.upVote(this.props.post.id);
   }
 
-  handleDownVote() {
+  handleDownVote = () => {
     this.props.downVote(this.props.post.id);
   }
 
-  handleOnClickTitle() {   
-  }
-
-  handleOnClickComments() {
+  handleOnClickComments = () => {
     this.setState((prevState) => ({
       showComments: !prevState.showComments
     }));
@@ -196,7 +182,8 @@ export class Post extends React.Component {
       voteScore = 0,
       body,
       id,
-      category
+      category,
+      author
     } = this.props.post;
     const {
       showComments,
@@ -221,6 +208,7 @@ export class Post extends React.Component {
             <LinkedTitle />
             <DateContainer>
               <Timestamp time={new Date(timestamp)}/>
+              <Author>by {author}</Author>
             </DateContainer>
             <CommentCount onClick={this.handleOnClickComments}>Comments: {commentCount}</CommentCount>
           </ InfoContainer>
@@ -254,20 +242,16 @@ export class Post extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    upVote: (id) => dispatch(upVote(id)),
-    downVote: (id) => dispatch(downVote(id)),
-    increaseCommentCount: (postId) => dispatch(increaseCommentCount(postId)),
-    setComments: (id, comments) => dispatch(setComments(id, comments)),
-    addComment: (id, comment) => dispatch(addComment(id, comment)),
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  upVote: (id) => dispatch(upVote(id)),
+  downVote: (id) => dispatch(downVote(id)),
+  increaseCommentCount: (postId) => dispatch(increaseCommentCount(postId)),
+  setComments: (id, comments) => dispatch(setComments(id, comments)),
+  addComment: (id, comment) => dispatch(addComment(id, comment)),
+})
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    comments: state.comments[ownProps.post.id]
-  }
-}
+const mapStateToProps = (state, ownProps) => ({
+  comments: state.comments[ownProps.post.id]
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);
